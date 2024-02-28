@@ -50,13 +50,21 @@ function DashboardHome() {
 	};
 
 	useEffect(() => {
+		const username_isLoggedIn = cookiesHandler.getCookie("username");
+
+		if (username_isLoggedIn == "admin") {
+			router.replace("/");
+		} else {
+			router.replace("/dashboard");
+		}
+
 		Users.getMyProfile({ isNotify: false }).then((res: any) => {
-			if (!res) {
-				cookiesHandler.deleteCookie("access_token");
-				router.replace("/");
-				return;
-			}
-			setUserData(res.data);
+			// if (!res) {
+			// 	cookiesHandler.deleteCookie("access_token");
+			// 	router.replace("/");
+			// 	return;
+			// }
+			// setUserData(res.data);
 		});
 
 		getPonds();
@@ -93,7 +101,9 @@ function DashboardHome() {
 				<p className="text-xs font-bold">User ID</p>
 				{userData?.apiKey ? (
 					<div className="flex items-center justify-start gap-4">
-						<p className="text-base font-light">{userData?.apiKey}</p>
+						<p className="text-base font-light">
+							{userData?.apiKey}
+						</p>
 						<button onClick={buttonCopy} className="text-gray-500">
 							<CopyOutlined rev="string" />
 						</button>
@@ -111,7 +121,11 @@ function DashboardHome() {
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-2">
 				{pondsData?.map((pond: IPonds, i: number) => {
 					return (
-						<PondCards listRefresher={() => getPonds()} {...pond} key={i} />
+						<PondCards
+							listRefresher={() => getPonds()}
+							{...pond}
+							key={i}
+						/>
 					);
 				})}
 			</div>
@@ -120,8 +134,9 @@ function DashboardHome() {
 					Lihat lainnya. . . .
 				</p>
 			</Link>
-			{!pondsData?.length && <CenterEmpty message="Tambak tidak ditemukan" />}
-
+			{!pondsData?.length && (
+				<CenterEmpty message="Tambak tidak ditemukan" />
+			)}
 		</div>
 	);
 }

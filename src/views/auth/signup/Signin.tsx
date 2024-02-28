@@ -30,8 +30,13 @@ function Signin() {
 
 	const checkLoggedIn = () => {
 		const isLoggedIn = cookiesHandler.getCookie("access_token");
+		const username_isLoggedIn = cookiesHandler.getCookie("username");
 		if (!isLoggedIn) return;
-		router.replace("/dashboard");
+		if (username_isLoggedIn == "admin") {
+			router.replace("/");
+		} else {
+			router.replace("/dashboard");
+		}
 	};
 
 	const handleLogin = async () => {
@@ -47,6 +52,13 @@ function Signin() {
 					res.data.access_token,
 					9999
 				);
+				if (res.data.data.username) {
+					cookiesHandler.setCookie(
+						"username",
+						res.data.data.username,
+						9999
+					);
+				}
 				checkLoggedIn();
 			})
 			.finally(() => {
