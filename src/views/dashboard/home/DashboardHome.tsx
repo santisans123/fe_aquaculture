@@ -59,12 +59,12 @@ function DashboardHome() {
 		}
 
 		Users.getMyProfile({ isNotify: false }).then((res: any) => {
-			// if (!res) {
-			// 	cookiesHandler.deleteCookie("access_token");
-			// 	router.replace("/");
-			// 	return;
-			// }
-			// setUserData(res.data);
+			if (!res) {
+				cookiesHandler.deleteCookie("access_token");
+				router.replace("/");
+				return;
+			}
+			setUserData(res.data);
 		});
 
 		getPonds();
@@ -83,7 +83,6 @@ function DashboardHome() {
 					block={true}
 				/>
 			)}
-
 			<div className="mt-2">
 				<p className="text-xs font-bold">Username</p>
 				{userData?.username ? (
@@ -117,7 +116,6 @@ function DashboardHome() {
 					/>
 				)}
 			</div>
-
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-2">
 				{pondsData?.map((pond: IPonds, i: number) => {
 					return (

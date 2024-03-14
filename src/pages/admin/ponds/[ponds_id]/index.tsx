@@ -1,6 +1,6 @@
 import Head from "next/head";
-import DashboardLayout from "@/layouts/DashboardLayout";
-import PondsById from "@/views/dashboard/ponds/ById/ById";
+import AdminLayout from "@/layouts/AdminLayout";
+import PondsById from "@/views/admin/ponds/ById/ById";
 
 export default function Auth() {
 	return (
@@ -17,9 +17,9 @@ export default function Auth() {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<DashboardLayout>
+			<AdminLayout>
 				<PondsById />
-			</DashboardLayout>
+			</AdminLayout>
 		</>
 	);
 }

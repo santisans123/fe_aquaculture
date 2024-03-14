@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import PondCards from "@/components/Cards/PondCards";
+import AdminPondCards from "@/components/AdminCards/AdminPondCards";
 import CenterEmpty from "@/components/Empty/CenterEmpty";
 import { Ponds, Users } from "@/services";
 import cookiesHandler from "@/utils/storage/cookies";
@@ -22,15 +22,10 @@ interface IPonds {
 	cityId: string;
 }
 
-function DashboardProfile() {
+function AdminHome() {
 	const [userData, setUserData] = useState<IUserData>();
 	const [pondsData, setPondsData] = useState<IPonds[]>();
 	const router = useRouter();
-
-	function logout() {
-		cookiesHandler.deleteCookie("access_token");
-		router.replace("/");
-	}
 
 	function buttonCopy() {
 		navigator.clipboard.writeText(userData?.apiKey as string);
@@ -39,6 +34,21 @@ function DashboardProfile() {
 			content: "User ID: " + userData?.apiKey + " has beed copied!",
 		});
 	}
+
+	const getPonds = async () => {
+		Ponds.getAllNoQueryPonds({
+			isNotify: true,
+			pondsName: "",
+			limit: 2,
+			page: 1,
+			cityId: "",
+			provinceId: "",
+		}).then((res: any) => {
+			if (!res) return;
+			console.log(res.data);
+			setPondsData(res.data);
+		});
+	};
 
 	useEffect(() => {
 		Users.getMyProfile({ isNotify: false }).then((res: any) => {
@@ -49,6 +59,8 @@ function DashboardProfile() {
 			}
 			setUserData(res.data);
 		});
+
+		getPonds();
 	}, []);
 
 	return (
@@ -98,13 +110,29 @@ function DashboardProfile() {
 					/>
 				)}
 			</div>
-			<button onClick={logout} className="flex-1 border-b-2">
-				<div className="mt-6 rounded-lg font-light text-xs px-2 py-1 bg-blue-600 text-white hover:bg-blue-400">
-					Logout
-				</div>
-			</button>
+			<p></p>
+
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+				{pondsData?.map((pond: IPonds, i: number) => {
+					return (
+						<AdminPondCards
+							listRefresher={() => getPonds()}
+							{...pond}
+							key={i}
+						/>
+					);
+				})}
+			</div>
+			<Link href="/admin/ponds">
+				<p className="text-blue-600 w-full text-right mt-2">
+					Lihat lainnya. . . .
+				</p>
+			</Link>
+			{!pondsData?.length && (
+				<CenterEmpty message="Tambak tidak ditemukan" />
+			)}
 		</div>
 	);
 }
 
-export default DashboardProfile;
+export default AdminHome;

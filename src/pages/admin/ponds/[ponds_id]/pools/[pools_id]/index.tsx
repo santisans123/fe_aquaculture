@@ -1,12 +1,13 @@
 import Head from "next/head";
-import DashboardLayout from "@/layouts/DashboardLayout";
+import AdminLayout from "@/layouts/AdminLayout";
 import PondsById from "@/views/dashboard/ponds/ById/ById";
+import PoolsView from "@/views/admin/pools/PoolsView";
 
 export default function Auth() {
 	return (
 		<>
 			<Head>
-				<title>Detail Tambak - PENS Aquaculture Technology</title>
+				<title>Detail Kolam - PENS Aquaculture Technology</title>
 				<meta
 					name="description"
 					content="Pascasarjana Politeknik Elektronika Negeri Surabaya"
@@ -17,9 +18,9 @@ export default function Auth() {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<DashboardLayout>
-				<PondsById />
-			</DashboardLayout>
+			<AdminLayout>
+				<PoolsView />
+			</AdminLayout>
 		</>
 	);
 }

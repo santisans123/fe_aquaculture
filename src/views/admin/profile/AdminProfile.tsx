@@ -22,7 +22,7 @@ interface IPonds {
 	cityId: string;
 }
 
-function DashboardProfile() {
+function AdminProfile() {
 	const [userData, setUserData] = useState<IUserData>();
 	const [pondsData, setPondsData] = useState<IPonds[]>();
 	const router = useRouter();
@@ -42,11 +42,11 @@ function DashboardProfile() {
 
 	useEffect(() => {
 		Users.getMyProfile({ isNotify: false }).then((res: any) => {
-			if (!res) {
-				cookiesHandler.deleteCookie("access_token");
-				router.replace("/");
-				return;
-			}
+			// if (!res) {
+			// 	cookiesHandler.deleteCookie("access_token");
+			// 	router.replace("/");
+			// 	return;
+			// }
 			setUserData(res.data);
 		});
 	}, []);
@@ -107,4 +107,4 @@ function DashboardProfile() {
 	);
 }
 
-export default DashboardProfile;
+export default AdminProfile;

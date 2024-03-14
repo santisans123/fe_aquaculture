@@ -11,11 +11,14 @@ export default function Profle() {
 					name="description"
 					content="Pascasarjana Politeknik Elektronika Negeri Surabaya"
 				/>
-				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1"
+				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<DashboardLayout>
-				<DashboardProfile/>
+				<DashboardProfile />
 			</DashboardLayout>
 		</>
 	);

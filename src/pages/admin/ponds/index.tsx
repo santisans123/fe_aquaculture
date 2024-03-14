@@ -1,12 +1,15 @@
 import Head from "next/head";
-import DashboardLayout from "@/layouts/DashboardLayout";
-import PondsById from "@/views/dashboard/ponds/ById/ById";
+import { Inter } from "@next/font/google";
+import AdminLayout from "@/layouts/AdminLayout";
+import AdminPonds from "@/views/admin/ponds/AdminPonds";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Auth() {
 	return (
 		<>
 			<Head>
-				<title>Detail Tambak - PENS Aquaculture Technology</title>
+				<title>Daftar Tambak - PENS Aquaculture Technology</title>
 				<meta
 					name="description"
 					content="Pascasarjana Politeknik Elektronika Negeri Surabaya"
@@ -17,9 +20,9 @@ export default function Auth() {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<DashboardLayout>
-				<PondsById />
-			</DashboardLayout>
+			<AdminLayout>
+				<AdminPonds />
+			</AdminLayout>
 		</>
 	);
 }

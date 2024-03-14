@@ -1,12 +1,13 @@
+import AdminHeader from "@/components/AdminLayout/Header";
+import AdminLayout from "@/layouts/AdminLayout";
+import AdminHome from "@/views/admin/home/AdminHome";
 import Head from "next/head";
-import DashboardLayout from "@/layouts/DashboardLayout";
-import PondsById from "@/views/dashboard/ponds/ById/ById";
 
-export default function Auth() {
+export default function Home() {
 	return (
 		<>
 			<Head>
-				<title>Detail Tambak - PENS Aquaculture Technology</title>
+				<title>Admin - PENS Aquaculture Technology</title>
 				<meta
 					name="description"
 					content="Pascasarjana Politeknik Elektronika Negeri Surabaya"
@@ -17,9 +18,9 @@ export default function Auth() {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<DashboardLayout>
-				<PondsById />
-			</DashboardLayout>
+			<AdminLayout>
+				<AdminHome />
+			</AdminLayout>
 		</>
 	);
 }

@@ -33,7 +33,7 @@ function Signin() {
 		const username_isLoggedIn = cookiesHandler.getCookie("username");
 		if (!isLoggedIn) return;
 		if (username_isLoggedIn == "admin") {
-			router.replace("/");
+			router.replace("/admin");
 		} else {
 			router.replace("/dashboard");
 		}
