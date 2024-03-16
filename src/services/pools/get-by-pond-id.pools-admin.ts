@@ -5,10 +5,10 @@ interface ILogin {
   pondId: string;
 }
 
-async function getPoolsByPondId(user: ILogin) {
+async function getPoolsByPondIdAdmin(user: ILogin) {
   const { data } = await serviceInstance(user.isNotify).get(
-    "/api/v1/pools/pondsId/" + user.pondId
+    "/api/v1/pools/pondsIdAdmin/" + user.pondId
   );
   return data;
 }
-export { getPoolsByPondId };
+export { getPoolsByPondIdAdmin };

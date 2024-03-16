@@ -73,7 +73,7 @@ function PondsById() {
 				});
 			});
 
-			Pools.getPoolsByPondId({
+			Pools.getPoolsByPondIdAdmin({
 				isNotify: true,
 				pondId: pondsId,
 			}).then((res) => {

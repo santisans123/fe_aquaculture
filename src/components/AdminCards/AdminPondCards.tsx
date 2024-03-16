@@ -51,12 +51,13 @@ function PondCards(props: IPonds) {
 	};
 
 	const getPools = async () => {
-		Pools.getPoolsByPondId({ isNotify: false, pondId: props._id }).then(
-			(res) => {
-				if (!res) return;
-				setNumberOfPools(res.data.length);
-			}
-		);
+		Pools.getPoolsByPondIdAdmin({
+			isNotify: false,
+			pondId: props._id,
+		}).then((res) => {
+			if (!res) return;
+			setNumberOfPools(res.data.length);
+		});
 	};
 
 	const handleDelete = async () => {
