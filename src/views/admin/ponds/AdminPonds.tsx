@@ -69,7 +69,7 @@ function AdminPonds() {
 		provinceId: string
 	) => {
 		Ponds.getAllNoQueryPonds({
-			isNotify: false,
+			isNotify: true,
 			pondsName: pondName,
 			limit: 9999,
 			page: 1,

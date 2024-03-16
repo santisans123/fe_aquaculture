@@ -28,14 +28,14 @@ interface IProvince {
 	longitude: string;
 }
 
-function AdminPondCards(props: IPonds) {
+function PondCards(props: IPonds) {
 	const [city, setCity] = useState<ICity>();
 	const [province, setProvince] = useState<IProvince>();
 	const [numberOfPools, setNumberOfPools] = useState<number>(0);
 
 	const getLocation = async () => {
 		Cities.getCityById({
-			cityId: props.cityId._id,
+			cityId: props.cityId,
 			isNotify: false,
 		}).then((res: any) => {
 			if (!res) return;
@@ -138,4 +138,4 @@ function AdminPondCards(props: IPonds) {
 	);
 }
 
-export default AdminPondCards;
+export default PondCards;

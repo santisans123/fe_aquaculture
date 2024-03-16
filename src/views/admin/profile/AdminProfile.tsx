@@ -64,7 +64,6 @@ function AdminProfile() {
 					block={true}
 				/>
 			)}
-
 			<div className="mt-2">
 				<p className="text-xs font-bold">Username</p>
 				{userData?.username ? (
@@ -98,6 +97,7 @@ function AdminProfile() {
 					/>
 				)}
 			</div>
+
 			<button onClick={logout} className="flex-1 border-b-2">
 				<div className="mt-6 rounded-lg font-light text-xs px-2 py-1 bg-blue-600 text-white hover:bg-blue-400">
 					Logout

@@ -1,13 +1,15 @@
-import AdminHeader from "@/components/AdminLayout/Header";
-import AdminLayout from "@/layouts/AdminLayout";
-import AdminHome from "@/views/admin/home/AdminHome";
 import Head from "next/head";
+import { Inter } from "@next/font/google";
+import AdminLayout from "@/layouts/AdminLayout";
+import AdminUsers from "@/views/admin/users/AdminUsers";
 
-export default function Home() {
+const inter = Inter({ subsets: ["latin"] });
+
+export default function Users() {
 	return (
 		<>
 			<Head>
-				<title>Admin - PENS Aquaculture Technology</title>
+				<title>Users - PENS Aquaculture Technology</title>
 				<meta
 					name="description"
 					content="Pascasarjana Politeknik Elektronika Negeri Surabaya"
@@ -19,7 +21,7 @@ export default function Home() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<AdminLayout>
-				<AdminHome />
+				<AdminUsers />
 			</AdminLayout>
 		</>
 	);

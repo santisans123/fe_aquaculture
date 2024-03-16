@@ -36,11 +36,11 @@ const AdminHeader = () => {
 			<ul className="w-full flex flex-row items-center justify-evenly text-xs mt-4 gap-4">
 				<li
 					className={`flex-1 text-center rounded py-2 border-b-4 border-blue-800 hover:border-blue-400 ${defineStyleNav(
-						undefined
+						"users"
 					)}`}
 				>
-					<Link href="/admin">
-						<p>Beranda</p>
+					<Link href="/admin/users">
+						<p>Users</p>
 					</Link>
 				</li>
 				<li
