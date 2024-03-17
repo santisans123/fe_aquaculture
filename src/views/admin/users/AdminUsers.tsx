@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import AdminUsersTable from "@/components/AdminTable/AdminUsersTable";
+import AddNewUsers from "./partials/AddNewUsers";
 import CenterEmpty from "@/components/Empty/CenterEmpty";
 import { Ponds, Users } from "@/services";
 import cookiesHandler from "@/utils/storage/cookies";
@@ -16,6 +17,13 @@ interface IUserData {
 	username: string;
 	apiKey: string;
 }
+
+// interface ILoginCred {
+// 	fullName: string;
+// 	username: string;
+// 	password: string;
+// }
+
 interface IUsersData {
 	_id: string;
 	fullName: string;
@@ -27,6 +35,7 @@ interface IUsersData {
 function AdminHome() {
 	const [userData, setUserData] = useState<IUserData>();
 	const [usersData, setUsersData] = useState<IUsersData[]>();
+
 	const router = useRouter();
 
 	function buttonCopy() {
@@ -68,6 +77,7 @@ function AdminHome() {
 		<div className="mt-8 px-2 lg:w-full lg:m-auto lg:mt-8 pb-16">
 			<div className="w-full mt-16 flex flex-row justify-between items-center">
 				<h2 className="text-2xl font-semibold">Users</h2>
+				<AddNewUsers />
 			</div>
 			<div className="mt-4 relative overflow-x-auto shadow-md sm:rounded-lg">
 				<table className="w-full text-sm text-left rtl:text-right text-gray-500 ">

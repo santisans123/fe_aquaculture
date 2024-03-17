@@ -17,15 +17,11 @@ function UserCard(props: IUsersData) {
 		setIsModalOpen(true);
 	};
 
-	// const handleOk = () => {
-	// 	setIsModalOpen(false);
-	// };
-
 	const handleCancel = () => {
 		setIsModalOpen(false);
 	};
 
-	const formattedDate = new Date("2024-02-20T15:57:13.706Z").toLocaleString();
+	const formattedDate = new Date(props.createdAt).toLocaleString();
 
 	return (
 		<div>
