@@ -20,11 +20,11 @@ function AdminLayout({ children }: IMainLayout) {
 			return router.replace("/");
 		} else {
 			if (username_isLoggedIn != "admin") {
-				message.info({ content: "You have't to access admin!" });
+				message.info({ content: "You haven't admin access!" });
 				return router.replace("/dashboard");
 			} else {
 				if (!role_isLoggedIn) {
-					message.info({ content: "You have't to access admin!" });
+					message.info({ content: "You haven't admin access!" });
 					return router.replace("/dashboard");
 				}
 			}

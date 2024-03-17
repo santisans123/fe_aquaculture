@@ -14,14 +14,17 @@ function DashboardLayout({ children }: IMainLayout) {
 	const checkLoggedIn = () => {
 		const isLoggedIn = cookiesHandler.getCookie("access_token");
 		const role_isLoggedIn = cookiesHandler.getCookie("role");
+		const username_isLoggedIn = cookiesHandler.getCookie("username");
 		if (!isLoggedIn) {
 			message.info({ content: "You have to logged in first!" });
 			return router.replace("/");
 		}
-		// if (role_isLoggedIn) {
-		// 	message.info({ content: "You have to logged in first!" });
-		// 	return router.replace("/admin/ponds");
-		// }
+		if (username_isLoggedIn == "admin") {
+			if (role_isLoggedIn) {
+				message.info({ content: "You only admin access !" });
+				return router.replace("/admin/ponds");
+			}
+		}
 	};
 
 	useEffect(() => {
