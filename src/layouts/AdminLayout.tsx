@@ -13,9 +13,21 @@ function AdminLayout({ children }: IMainLayout) {
 	const router = useRouter();
 	const checkLoggedIn = () => {
 		const isLoggedIn = cookiesHandler.getCookie("access_token");
+		const username_isLoggedIn = cookiesHandler.getCookie("username");
+		const role_isLoggedIn = cookiesHandler.getCookie("role");
 		if (!isLoggedIn) {
 			message.info({ content: "You have to logged in first!" });
 			return router.replace("/");
+		} else {
+			if (username_isLoggedIn != "admin") {
+				message.info({ content: "You have't to access admin!" });
+				return router.replace("/dashboard");
+			} else {
+				if (!role_isLoggedIn) {
+					message.info({ content: "You have't to access admin!" });
+					return router.replace("/dashboard");
+				}
+			}
 		}
 	};
 

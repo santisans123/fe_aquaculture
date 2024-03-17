@@ -53,7 +53,7 @@ function DashboardHome() {
 		const username_isLoggedIn = cookiesHandler.getCookie("username");
 
 		if (username_isLoggedIn == "admin") {
-			router.replace("/");
+			router.replace("/admin/ponds");
 		} else {
 			router.replace("/dashboard");
 		}

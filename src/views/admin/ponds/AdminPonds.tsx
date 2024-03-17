@@ -8,7 +8,6 @@ import {
 } from "@ant-design/icons";
 import { Button, Input, message, Modal, Select } from "antd";
 import React, { useEffect, useState } from "react";
-import AddNewPonds from "./partials/AddNewPonds";
 
 interface IUserData {
 	fullName: string;
@@ -69,7 +68,7 @@ function AdminPonds() {
 		provinceId: string
 	) => {
 		Ponds.getAllNoQueryPonds({
-			isNotify: true,
+			isNotify: false,
 			pondsName: pondName,
 			limit: 9999,
 			page: 1,
@@ -101,12 +100,6 @@ function AdminPonds() {
 		<div className="mt-8 px-2 lg:w-full lg:m-auto lg:mt-8 pb-16">
 			<div className="w-full mt-16 flex flex-row justify-between items-center">
 				<h2 className="text-2xl font-semibold">Daftar Tambak</h2>
-				<AddNewPonds
-					listRefresher={() =>
-						findPonds(queryName, selectedCity, selectedProv)
-					}
-					provincesData={provincesData as IProvince[]}
-				/>
 			</div>
 			<div className="mt-4">
 				<p>Cari Tambak</p>

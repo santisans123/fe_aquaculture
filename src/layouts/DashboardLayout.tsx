@@ -13,10 +13,15 @@ function DashboardLayout({ children }: IMainLayout) {
 	const router = useRouter();
 	const checkLoggedIn = () => {
 		const isLoggedIn = cookiesHandler.getCookie("access_token");
+		const role_isLoggedIn = cookiesHandler.getCookie("role");
 		if (!isLoggedIn) {
 			message.info({ content: "You have to logged in first!" });
 			return router.replace("/");
 		}
+		// if (role_isLoggedIn) {
+		// 	message.info({ content: "You have to logged in first!" });
+		// 	return router.replace("/admin/ponds");
+		// }
 	};
 
 	useEffect(() => {

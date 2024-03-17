@@ -59,6 +59,9 @@ function Signin() {
 						9999
 					);
 				}
+				if (res.data.data.username == "admin") {
+					cookiesHandler.setCookie("role", "admin", 9999);
+				}
 				checkLoggedIn();
 			})
 			.finally(() => {

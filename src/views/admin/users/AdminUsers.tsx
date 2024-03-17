@@ -68,9 +68,6 @@ function AdminHome() {
 		<div className="mt-8 px-2 lg:w-full lg:m-auto lg:mt-8 pb-16">
 			<div className="w-full mt-16 flex flex-row justify-between items-center">
 				<h2 className="text-2xl font-semibold">Users</h2>
-				<button className="px-4 py-2 rounded bg-green-500 text-white hover:text-green-500 hover:bg-white border-2 border-green-500">
-					<p className="text-sm font-light">Tambah User</p>
-				</button>
 			</div>
 			<div className="mt-4 relative overflow-x-auto shadow-md sm:rounded-lg">
 				<table className="w-full text-sm text-left rtl:text-right text-gray-500 ">

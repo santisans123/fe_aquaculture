@@ -40,16 +40,6 @@ function PoolCards(props: IPoolsCard) {
 		temperature: 0,
 	});
 
-	const handleDelete = async () => {
-		return await Ponds.deletePondsById({
-			isNotify: false,
-			pondsId: props._id,
-		}).then((res) => {
-			if (!res) return;
-			return props.listRefresher();
-		});
-	};
-
 	const getMonitoring = async () => {
 		Monitoring.getAllMonitoring({
 			from: "",
@@ -134,18 +124,6 @@ function PoolCards(props: IPoolsCard) {
 						Buka
 					</button>
 				</Link>
-				<Popconfirm
-					title="Hapus kolam?"
-					description="Apakah anda yakin untuk menghapus tambak ini?"
-					onConfirm={handleDelete}
-					okText="Iya"
-					cancelText="Tidak"
-					okButtonProps={{ loading: false }}
-				>
-					<button className="w-full flex-1 py-2 bg-red-600 text-white rounded-xl border-2 border-white">
-						Hapus
-					</button>
-				</Popconfirm>{" "}
 			</div>
 		</div>
 	);
