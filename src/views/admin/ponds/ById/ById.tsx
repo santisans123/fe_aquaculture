@@ -103,7 +103,7 @@ function PondsById() {
 						<h4>{provinceData?.provinceName}</h4>
 					</div>
 				</div>
-				<div className="">
+				{/* <div className="">
 					<AddNewPools
 						listRefresher={() =>
 							getPageData(router?.query?.ponds_id as string)
@@ -111,7 +111,7 @@ function PondsById() {
 						pondsId={router?.query?.ponds_id as string}
 						pondsName={pondData?.pondsName as string}
 					/>
-				</div>
+				</div> */}
 			</div>
 
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">

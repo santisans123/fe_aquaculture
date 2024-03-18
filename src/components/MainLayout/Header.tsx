@@ -110,7 +110,11 @@ function HeaderMainLayout() {
 				{userData?.username ? (
 					<div className="flex flex-row gap-2 flex-1 justify-end">
 						<Link
-							href="/dashboard"
+							href={
+								userData.username === "admin"
+									? "/admin/ponds"
+									: "/dashboard"
+							}
 							className="flex-1 flex-row flex"
 						>
 							<div className="font-light text-xs px-2 py-1 hover:bg-blue-600 hover:text-white text-center">
