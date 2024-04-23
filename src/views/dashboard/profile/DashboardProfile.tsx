@@ -86,7 +86,7 @@ function DashboardProfile() {
 							{userData?.apiKey}
 						</p>
 						<button onClick={buttonCopy} className="text-gray-500">
-							<CopyOutlined rev="string" />
+							<CopyOutlined />
 						</button>
 					</div>
 				) : (

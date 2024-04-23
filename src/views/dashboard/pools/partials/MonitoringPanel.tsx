@@ -207,7 +207,7 @@ function MonitoringPanel(props: IMonitoringPanel) {
 						<div className="space-y-2 md:space-x-4 mb-4">
 							<DatePicker
 								onChange={(date, dateString) => {
-									setStartDate(dateString);
+									setStartDate(Array.isArray(dateString) ? dateString[0] : dateString);
 								}}
 								placeholder="Tanggal Awal"
 								allowClear
@@ -215,7 +215,7 @@ function MonitoringPanel(props: IMonitoringPanel) {
 							<span className="hidden md:inline">-</span>
 							<DatePicker
 								onChange={(date, dateString) => {
-									setEndDate(dateString);
+									setEndDate(Array.isArray(dateString) ? dateString[0] : dateString);
 								}}
 								placeholder="Tanggal Akhir"
 								disabled={!startDate}

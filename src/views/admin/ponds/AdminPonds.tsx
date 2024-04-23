@@ -141,7 +141,6 @@ function AdminPonds() {
 							className="text-xl"
 						>
 							<CloseCircleFilled
-								rev="cite"
 								className="text-white bg-red-500 hover:text-red-500 hover:bg-white rounded-full"
 							/>
 						</button>
@@ -168,7 +167,6 @@ function AdminPonds() {
 								className="text-xl"
 							>
 								<CloseCircleFilled
-									rev="cite"
 									className="text-white bg-red-500 hover:text-red-500 hover:bg-white rounded-full"
 								/>
 							</button>

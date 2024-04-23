@@ -18,13 +18,23 @@ const nextConfig = {
   },
   images: {
     disableStaticImages: true,
-    domains: ["192.168.0.109", "localhost", "pascasarjana-s3.s3.ap-southeast-1.amazonaws.com"],
+    domains: [
+      "192.168.0.109",
+      "localhost",
+      "pascasarjana-s3.s3.ap-southeast-1.amazonaws.com",
+    ],
   },
 };
 
 module.exports = (_phase, { defaultConfig }) => {
   const plugins = [withPWA, withTM, withImages, removeImports];
-  return plugins.reduce((acc, plugin) => plugin(acc), { ...defaultConfig, ...nextConfig });
+  return plugins.reduce((acc, plugin) => plugin(acc), {
+    ...defaultConfig,
+    ...nextConfig,
+  });
+};
+module.exports = {
+  distDir: "build",
 };
 
 /*

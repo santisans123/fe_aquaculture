@@ -77,7 +77,7 @@ function UserCard() {
 						{!isLoading ? (
 							<p>Tambah</p>
 						) : (
-							<LoadingOutlined rev="string" />
+							<LoadingOutlined />
 						)}
 					</button>,
 				]}
