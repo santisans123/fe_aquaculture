@@ -1,22 +1,22 @@
 {
   "admin/maps/index.tsx -> @/views/dashboard/maps/DashboardMap": {
-    "id": 26954,
+    "id": 45188,
     "files": [
-      "static/chunks/0b7b90cd.d8db2d9dafed3812.js",
-      "static/chunks/954.8576d7349c7a7ce8.js"
+      "static/chunks/0b7b90cd.a999d1778dba8099.js",
+      "static/chunks/188.2eb8cb202ce2caf3.js"
     ]
   },
   "dashboard/maps/index.tsx -> @/views/dashboard/maps/DashboardMap": {
-    "id": 26954,
+    "id": 45188,
     "files": [
-      "static/chunks/0b7b90cd.d8db2d9dafed3812.js",
-      "static/chunks/954.8576d7349c7a7ce8.js"
+      "static/chunks/0b7b90cd.a999d1778dba8099.js",
+      "static/chunks/188.2eb8cb202ce2caf3.js"
     ]
   },
   "prediction/index.tsx -> @/views/prediction/Prediction": {
-    "id": 98218,
+    "id": 12406,
     "files": [
-      "static/chunks/218.fb332ada5a0a89c9.js"
+      "static/chunks/406.bb7f746c5b1c5dc7.js"
     ]
   }
 }
