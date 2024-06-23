@@ -11,6 +11,7 @@ import {
 } from "@/utils/helpers/csv";
 
 import RecordChart from "@/components/RecordChart";
+import Link from "next/link";
 
 interface IMonitoringPanel {
 	poolId: string;
@@ -222,6 +223,13 @@ function MonitoringPanel(props: IMonitoringPanel) {
 								allowClear
 							/>
 						</div>
+						<div className="space-y-2 md:space-x-2 mb-2">
+							<Link className="flex-1" href={"/dashboard/prediction/" + props.poolId}>
+								<button className="px-4 w-full py-2 bg-blue-600 text-white rounded-xl border-2 border-white">
+									Buka Prediksi
+								</button>
+							</Link>
+						</div>
 						<Button
 							className="bg-green-500 hover:bg-green-400 text-white px-4 rounded-lg"
 							onClick={handleDownloadClick}
@@ -249,7 +257,7 @@ function MonitoringPanel(props: IMonitoringPanel) {
 					</div>
 				</div>
 			</div>
-		</div>
+		</div >
 	);
 }
 
