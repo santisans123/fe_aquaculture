@@ -58,22 +58,22 @@ const RecordChart: React.FC<RecordChartProps> = ({
 			{
 				label: "Suhu",
 				data: temp,
-				backgroundColor: "rgba(255, 0, 0, 0.5)",
+				backgroundColor: "rgba(220, 38, 38, 0.5)",
 			},
 			{
 				label: "Oksigen",
 				data: oxygen,
-				backgroundColor: "rgba(0, 255, 0, 0.5)",
+				backgroundColor: "rgba(34, 197, 94, 0.5)",
 			},
 			{
 				label: "Salinitas",
 				data: salinity,
-				backgroundColor: "rgba(0, 0, 255, 0.5)",
+				backgroundColor: "rgba(59, 130, 246, 0.5)",
 			},
 			{
 				label: "pH",
 				data: pH,
-				backgroundColor: "rgba(255, 255, 0, 0.5)",
+				backgroundColor: "rgba(234, 179, 8, 0.5)",
 			},
 		],
 		labels: labels,
