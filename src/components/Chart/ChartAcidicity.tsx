@@ -40,8 +40,8 @@ const ChartAcidicity: React.FC<ChartProps> = ({ data }) => {
       {
         label: 'Predicted Acidity',
         data: data.predicted.acidity,
-        borderColor: 'rgba(40, 67, 135, 1)',
-        backgroundColor: 'rgba(40, 67, 135, 0.2)',
+        borderColor: 'rgba(59, 130, 246, 1)',
+        backgroundColor: 'rgba(59, 130, 246, 0.2)',
       },
     ],
   };
