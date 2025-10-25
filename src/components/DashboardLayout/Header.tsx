@@ -1,80 +1,112 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
+// components/Header.tsx
+import React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { BellOutlined, MenuOutlined, UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import cookiesHandler from "@/utils/storage/cookies";
-import { LogoutOutlined } from "@ant-design/icons";
 
-const DashboardHeader = () => {
-	const router = useRouter();
+interface HeaderProps {
+    toggleSidebar: () => void;
+    // FIX 1: Tambahkan onLogout ke interface HeaderProps
+    onLogout: () => void;
+}
 
-	const defineStyleNav = (label: string | undefined) => {
-		const route = router.asPath;
-		if (route.split("/")[2] == label) {
-			return `bg-blue-400 text-white border-blue-200`;
-		}
-		return "";
-	};
+// FIX 2: Hapus definisi onLogout yang salah di dalam getBreadcrumbs
+const Header: React.FC<HeaderProps> = ({ toggleSidebar, onLogout }) => {
+    const router = useRouter();
 
-	function logout() {
-		cookiesHandler.deleteCookie("access_token");
-		router.replace("/");
-	}
+    const getBreadcrumbs = () => {
+        const path = router.asPath;
+        const pathSegments = path.split('/').filter(segment => segment !== '');
 
-	useEffect(() => { }, []);
+        if (pathSegments.length === 1 && pathSegments[0] === 'dashboard') {
+            return <span className="text-gray-800 font-bold text-xl">Dashboard</span>;
+        }
 
-	return (
-		<div className="w-full">
-			<div className="flex flex-row items-center w-full justify-center gap-4 py-2">
-				<Link href="/" className="flex flex-row items-center gap-4">
-					<Image
-						className="cursor-pointer"
-						src="/images/logo-aquaculture-pens.webp"
-						alt="Logo PENS"
-						width={40}
-						height={300}
-						unoptimized={true}
-					/>
-					<h1 className="font-bold text-xs">PENS Aquaculture Technology</h1>
-				</Link>
-			</div>
-			<ul className="w-full flex flex-row items-center justify-evenly text-xs mt-4 gap-4">
-				<li
-					className={`flex-1 text-center rounded py-2 border-b-4 border-blue-800 hover:border-blue-400 ${defineStyleNav(
-						undefined
-					)}`}
-				>
-					<Link href="/dashboard">
-						<p>Beranda</p>
-					</Link>
-				</li>
-				<li
-					className={`flex-1 text-center rounded py-2 border-b-4 border-blue-800 hover:border-blue-400 ${defineStyleNav(
-						"ponds"
-					)}`}
-				>
-					<Link href="/dashboard/ponds">
-						<p>Tambak</p>
-					</Link>
-				</li>
-				<li
-					className={`flex-1 text-center rounded py-2 border-b-4 border-blue-800 hover:border-blue-400 ${defineStyleNav(
-						"profile"
-					)}`}
-				>
-					<Link href="/dashboard/profile">
-						<p>Akun</p>
-					</Link>
-				</li>
-				<li><button onClick={logout} className="flex-1 border-b-2">
-					<div className="mt-6 rounded-lg px-2 py-1 bg-blue-600 text-white hover:bg-blue-400">
-						<LogoutOutlined />
-					</div>
-				</button></li>
-			</ul>
-		</div>
-	);
+        const mappedSegments: { [key: string]: string } = {
+            'dashboard': 'Dashboard',
+            'account': 'Akun',
+            'bagan': 'Bagan',
+            'tables': 'Tabel Data',
+        };
+
+        let currentPath = '';
+
+        // FIX 3: Hapus definisi onLogout yang salah dan tidak terpakai dari sini.
+        /* function onLogout() {
+            cookiesHandler.deleteCookie("access_token");
+            router.replace("/");
+        }
+        */
+
+        return (
+            <span className="text-gray-600 text-sm flex items-center">
+                {pathSegments.map((segment, index) => {
+                    currentPath += `/${segment}`;
+                    const displaySegment = mappedSegments[segment] || segment.charAt(0).toUpperCase() + segment.slice(1);
+                    const isLast = index === pathSegments.length - 1;
+
+                    return (
+                        <React.Fragment key={segment}>
+                            <Link href={currentPath} className={`hover:text-amber-600 ${isLast ? 'font-bold text-gray-800' : 'text-gray-500'}`}>
+                                {displaySegment}
+                            </Link>
+                            {!isLast && <span className="mx-2 text-gray-400 font-light">/</span>}
+                        </React.Fragment>
+                    );
+                })}
+            </span>
+        );
+    };
+
+    return (
+        <header className="flex-shrink-0 bg-white shadow-md sticky top-0 z-20">
+            <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-3">
+                <div className="flex justify-between items-center">
+
+                    {/* Kiri: Toggle Mobile Menu & Breadcrumbs */}
+                    <div className="flex items-center space-x-4">
+                        <button
+                            onClick={toggleSidebar}
+                            className="lg:hidden text-gray-600 hover:text-amber-600 p-2 rounded-lg transition-colors"
+                            aria-label="Toggle Menu"
+                        >
+                            <MenuOutlined className="text-2xl" />
+                        </button>
+                        {getBreadcrumbs()}
+                    </div>
+
+                    {/* Kanan: Notifikasi & User Info */}
+                    <div className="flex items-center space-x-6">
+
+                        {/* Notification Bell (Dipertahankan seperti sebelumnya) */}
+                        <div className="relative cursor-pointer p-2 rounded-full hover:bg-gray-100 transition-colors">
+                            <BellOutlined className="text-gray-600 text-xl hover:text-amber-600" />
+                            <span className="absolute -top-1 -right-1 flex items-center justify-center h-4 w-4 rounded-full bg-red-500 text-white text-xs font-bold">
+                                3
+                            </span>
+                        </div>
+
+                        {/* User Profile Info - Dibuat jadi Tombol untuk Logout */}
+                        <button
+                            onClick={onLogout} // Menggunakan prop onLogout yang valid
+                            className="flex items-center space-x-3 cursor-pointer p-2 rounded-full hover:bg-gray-100 transition-colors border-l border-gray-300 pl-6"
+                            title="Klik untuk Keluar"
+                        >
+                            <div className="text-right hidden sm:block">
+                                <p className="font-semibold text-gray-800 text-sm">User</p>
+                                <p className="text-gray-500 text-xs">Member</p>
+                            </div>
+                            {/* Avatar/Ikon Logout */}
+                            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-amber-500 text-white border-2 border-amber-700">
+                                <LogoutOutlined className="text-xl" />
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+    );
 };
 
-export default DashboardHeader;
+export default Header;

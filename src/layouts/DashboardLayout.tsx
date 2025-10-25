@@ -1,9 +1,12 @@
+// src/layouts/DashboardLayout.tsx
 /* eslint-disable react-hooks/exhaustive-deps */
-import DashboardHeader from "@/components/DashboardLayout/Header";
-import cookiesHandler from "@/utils/storage/cookies";
-import { message } from "antd";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import { message } from "antd";
+
+// Perbarui import sesuai permintaan Anda
+import LayoutContainer from "@/components/DashboardLayout/DashboardLayout";
+import cookiesHandler from "@/utils/storage/cookies";
 
 interface IMainLayout {
 	children: JSX.Element;
@@ -11,33 +14,52 @@ interface IMainLayout {
 
 function DashboardLayout({ children }: IMainLayout) {
 	const router = useRouter();
+    // Tambahkan state untuk mengontrol kapan konten harus dimuat
+    const [isLoading, setIsLoading] = useState(true);
+
 	const checkLoggedIn = () => {
+        // Karena fungsi ini akan dipanggil di useEffect,
+        // kita TIDAK perlu lagi menambahkan pemeriksaan if (typeof window !== 'undefined') di sini.
+
 		const isLoggedIn = cookiesHandler.getCookie("access_token");
 		const role_isLoggedIn = cookiesHandler.getCookie("role");
 		const username_isLoggedIn = cookiesHandler.getCookie("username");
+
 		if (!isLoggedIn) {
 			message.info({ content: "You have to logged in first!" });
-			return router.replace("/");
+			router.replace("/");
+            return false; // Not logged in
 		}
-		if (username_isLoggedIn == "admin") {
+
+		if (username_isLoggedIn === "admin") {
 			if (role_isLoggedIn) {
 				message.info({ content: "You only admin access !" });
-				return router.replace("/admin/ponds");
+				router.replace("/admin/ponds");
+                return false; // Redirecting admin
 			}
 		}
+        return true; // Logged in and has access
 	};
 
 	useEffect(() => {
-		checkLoggedIn();
+        // Panggil checkLoggedIn HANYA di dalam useEffect untuk memastikan
+        // kode berjalan di sisi klien (browser).
+		if (checkLoggedIn()) {
+            setIsLoading(false);
+        }
 	}, []);
+
+    // Tampilkan loader atau komponen kosong selama proses autentikasi (Client-Side Check)
+    if (isLoading) {
+        // Tampilkan sesuatu yang sederhana, misalnya:
+        return <div className="flex items-center justify-center h-screen">Loading...</div>;
+    }
+
 	return (
-		<div className="w-full">
-			<div className="m-auto w-11/12 md:w-10/12 lg:8/12 xl:w-6/12">
-				<DashboardHeader />
-				{children}
-			</div>
-			{/* <FooterMainLayout /> */}
-		</div>
+        // Gunakan LayoutContainer yang lengkap
+		<LayoutContainer>
+			{children}
+		</LayoutContainer>
 	);
 }
 
