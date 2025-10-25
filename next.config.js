@@ -8,6 +8,11 @@ const withPWA = require("next-pwa")({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    // Reduce the number of workers to prevent too many file handles
+    workerThreads: false,
+    cpus: 1
+  },
   reactStrictMode: true,
   i18n: {
     locales: ["id", "en"],
