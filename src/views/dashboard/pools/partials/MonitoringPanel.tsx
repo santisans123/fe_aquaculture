@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DatePicker, Button } from "antd"; // Hapus Switch karena sudah diinduk
+import { DatePicker, Button } from "antd";
 import React, { useEffect, useState } from "react";
+import dayjs from 'dayjs'; // ✅ Import dayjs untuk DatePicker value
 
 import { Monitoring } from "@/services";
 import RecordTable from "@/components/RecordTable";
@@ -12,7 +13,6 @@ import {
 
 import RecordChart from "@/components/RecordChart";
 import Link from "next/link";
-// Import ikon untuk konsistensi
 import { DownloadOutlined, CalendarOutlined, LineChartOutlined, TableOutlined, BulbOutlined } from "@ant-design/icons";
 
 interface IMonitoringPanel {
@@ -20,17 +20,37 @@ interface IMonitoringPanel {
 }
 
 function MonitoringPanel(props: IMonitoringPanel) {
-    const [startDate, setStartDate] = useState<string>("");
-    const [endDate, setEndDate] = useState<string>("");
+    // ✅ Set default ke tanggal 1 bulan ini dan hari ini
+    const getDefaultDates = () => {
+        const today = new Date();
+        const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+        const formatDate = (date: Date) => {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        };
+
+        return {
+            start: formatDate(firstDayOfMonth),
+            end: formatDate(today)
+        };
+    };
+
+    const defaultDates = getDefaultDates();
+
+    const [startDate, setStartDate] = useState<string>(defaultDates.start);
+    const [endDate, setEndDate] = useState<string>(defaultDates.end);
     const [records, setRecords] = useState([]);
     const [labels, setLabels] = useState([]);
     const [oxygen, setOxygen] = useState([]);
     const [salinity, setSalinity] = useState([]);
-    const [pH, setpH] = useState([]);
+    const [pH, setPH] = useState([]);
     const [temp, setTemp] = useState([]);
-    const [isChartView, setChartView] = useState(true); // Tambahkan state untuk toggle Chart/Table
+    const [isChartView, setChartView] = useState(true);
+    const [isRealTime, setIsRealTime] = useState(false); // ✅ Toggle untuk mode real-time
 
-    // --- LOGIC PENGAMBILAN DATA (TIDAK DIUBAH) ---
     const getTodayMonitoring = async () => {
         const allMonitoring = await Monitoring.getTodayMonitoring({
             isNotify: false,
@@ -56,12 +76,8 @@ function MonitoringPanel(props: IMonitoringPanel) {
         });
 
         const thisDate = new Date(Date.now());
-
-        const date = `${thisDate.getFullYear()}-${thisDate.getMonth() + 1
-            }-${thisDate.getDate()}`;
-
+        const date = `${thisDate.getFullYear()}-${thisDate.getMonth() + 1}-${thisDate.getDate()}`;
         const startOfDay = new Date(new Date(date).toLocaleString()).getTime();
-
         const recentTime = new Date(Date.now()).getTime();
 
         const plottedDate: any = [];
@@ -86,11 +102,11 @@ function MonitoringPanel(props: IMonitoringPanel) {
                     );
                     plottedOxy.push(mon.oxygen);
                     plottedSal.push(mon.salinity);
-                    plottedPH.push(mon.acidity);
+                    plottedPH.push(mon.acidity); // ✅ Mengambil dari 'acidity'
                     plottedTemp.push(mon.temperature);
                     lastOxy = mon.oxygen;
                     lastSal = mon.salinity;
-                    lastPH = mon.acidity;
+                    lastPH = mon.acidity; // ✅ Update lastPH dari 'acidity'
                     lastTemp = mon.temperature;
                     return;
                 }
@@ -106,7 +122,7 @@ function MonitoringPanel(props: IMonitoringPanel) {
         setOxygen(plottedOxy);
         setSalinity(plottedSal);
         setTemp(plottedTemp);
-        setpH(plottedPH);
+        setPH(plottedPH); // ✅ FIX: Ubah dari setpH ke setPH
     };
 
     const getMonitoringByDate = async () => {
@@ -156,11 +172,11 @@ function MonitoringPanel(props: IMonitoringPanel) {
             plottedDate.push(new Date(mon.createdAt).toLocaleTimeString());
             plottedOxy.push(mon.oxygen);
             plottedSal.push(mon.salinity);
-            plottedPH.push(mon.acidity);
+            plottedPH.push(mon.acidity); // ✅ Mengambil dari 'acidity'
             plottedTemp.push(mon.temperature);
             lastOxy = mon.oxygen;
             lastSal = mon.salinity;
-            lastPH = mon.acidity;
+            lastPH = mon.acidity; // ✅ Update lastPH dari 'acidity'
             lastTemp = mon.temperature;
             return;
         });
@@ -169,6 +185,7 @@ function MonitoringPanel(props: IMonitoringPanel) {
         setOxygen(plottedOxy);
         setSalinity(plottedSal);
         setTemp(plottedTemp);
+        setPH(plottedPH); // ✅ FIX: Tambahkan setPH yang hilang!
     };
 
     const socketInit = () => {
@@ -191,23 +208,14 @@ function MonitoringPanel(props: IMonitoringPanel) {
 
     useEffect(() => {
         setRecords([]);
-        if (startDate || endDate) {
-            getMonitoringByDate();
-        } else {
-            getTodayMonitoring();
-            socketInit();
-        }
+        // ✅ Selalu gunakan getMonitoringByDate karena sudah ada default range
+        getMonitoringByDate();
     }, [startDate, endDate]);
-    // --- AKHIR LOGIC PENGAMBILAN DATA ---
 
     return (
         <div className="mt-4 w-full">
-
-            {/* Bagian Filter Tanggal dan Download */}
             <div className="bg-white p-6 rounded-xl shadow-lg mb-8">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-
-                    {/* Filter Tanggal */}
                     <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4 w-full md:w-auto">
                         <DatePicker
                             onChange={(date, dateString) => {
@@ -215,7 +223,7 @@ function MonitoringPanel(props: IMonitoringPanel) {
                             }}
                             placeholder="Tanggal Awal"
                             allowClear
-                            // Gaya Rounded dan Ikon
+                            value={startDate ? dayjs(startDate) : null}
                             className="rounded-xl border-gray-300 hover:border-amber-500 focus:border-amber-500"
                             suffixIcon={<CalendarOutlined className="text-amber-600" />}
                         />
@@ -227,14 +235,25 @@ function MonitoringPanel(props: IMonitoringPanel) {
                             placeholder="Tanggal Akhir"
                             disabled={!startDate}
                             allowClear
-                            // Gaya Rounded dan Ikon
+                            value={endDate ? dayjs(endDate) : null}
                             className="rounded-xl border-gray-300 hover:border-amber-500 focus:border-amber-500"
                             suffixIcon={<CalendarOutlined className="text-amber-600" />}
                         />
                     </div>
 
-                    {/* Tombol Aksi */}
                     <div className="flex flex-col sm:flex-row gap-4">
+
+                        {/* Tombol Reset ke Bulan Ini */}
+                        <Button
+                            className="rounded-xl border-gray-400 text-gray-600 hover:!bg-gray-50 font-semibold flex items-center justify-center gap-1"
+                            onClick={() => {
+                                const dates = getDefaultDates();
+                                setStartDate(dates.start);
+                                setEndDate(dates.end);
+                            }}
+                        >
+                            <CalendarOutlined /> Bulan Ini
+                        </Button>
 
                         {/* Tombol Buka Prediksi (Primary Orange/Rounded) */}
                         <Link href={"/dashboard/prediction/" + props.poolId} legacyBehavior>
@@ -257,10 +276,7 @@ function MonitoringPanel(props: IMonitoringPanel) {
                 </div>
             </div>
 
-            {/* Area Data: Grafik atau Tabel */}
             <div className="bg-white p-6 rounded-xl shadow-lg">
-
-                {/* Toggle Chart/Table (Tambahkan sebagai fitur di sini) */}
                 <div className="flex justify-end mb-4">
                     <Button
                         onClick={() => setChartView(!isChartView)}
@@ -285,7 +301,6 @@ function MonitoringPanel(props: IMonitoringPanel) {
                             pH={pH}
                         />
 
-                        {/* Legenda */}
                         <div className="mt-8 flex flex-wrap items-center justify-center text-sm text-gray-600 border-t pt-4">
                             <span className="flex items-center mr-4">
                                 <span className="w-4 h-4 bg-gray-700 rounded-full mr-2"></span>
@@ -312,7 +327,6 @@ function MonitoringPanel(props: IMonitoringPanel) {
                     </>
                 )}
             </div>
-
         </div>
     );
 }
